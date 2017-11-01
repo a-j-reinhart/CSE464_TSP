@@ -23,7 +23,7 @@ public class TravelMan {
 		
 		// read file
 		long startTime = System.currentTimeMillis();
-		setFileName("burma14.txt");
+		setFileName("practice_3.txt");
 		ArrayList<Point2D> original = readDataFile();
 		System.out.println("Dimension: " + dim);
 		
