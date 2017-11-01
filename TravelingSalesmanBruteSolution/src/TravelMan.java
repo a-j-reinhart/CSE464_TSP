@@ -22,21 +22,24 @@ public class TravelMan {
 	public static void main(String[] args) {
 		
 		// read file
+		long startTime = System.currentTimeMillis();
+		setFileName("burma14.txt");
 		ArrayList<Point2D> original = readDataFile();
-		System.out.println("Dimension:");
-		System.out.println(dim);
+		System.out.println("Dimension: " + dim);
 		
 		// original path
-		System.out.println("Original Path's Distance:");
 		bestDist = getPathDist(original);
-		System.out.println(bestDist);
+		System.out.println("Original Path's Distance: " + bestDist);
 		
 		// check all paths
 		checkAllPaths(original, 0);
-		System.out.println("Best Path's Distance:");
-		System.out.println(bestDist);
+		System.out.println("Best Path's Distance: " + bestDist);
 		//System.out.println("Best Path:");
 		//System.out.println(java.util.Arrays.toString(bestPath.toArray()));
+		
+		long endTime   = System.currentTimeMillis();
+		long totalTime = (endTime - startTime);
+		System.out.println("Time: " + totalTime + " milliseconds");
 	}
 	
 	private static double getPathDist(ArrayList<Point2D> path) {
@@ -53,13 +56,10 @@ public class TravelMan {
             java.util.Collections.swap(input, k, i);
         }
         if (k == input.size()-1){
-        	count += 1;
-        	//System.out.println(count);
         	double d = getPathDist(input);
         	if (d < bestDist) {
         		bestDist = d;
         		bestPath = input;
-        		//System.out.println(java.util.Arrays.toString(bestPath.toArray()));
         	}
         }
 	}
@@ -70,30 +70,22 @@ public class TravelMan {
     	String[] line = new String[10];
     	String fullLine = null;
        	try {
-       		Scanner reader = new Scanner(System.in);
-    		System.out.println("Name of file: ");
-    		setFileName(reader.nextLine());
     		raf = new RandomAccessFile(fileName, "r");
     		try {
     			raf.readLine(); // skip name, comment, & type
     			raf.readLine();
     			raf.readLine(); 
     			dim = Integer.parseInt(raf.readLine().substring(11));
-    			//System.out.println(dim);
     			raf.readLine(); // skip edge weight type & node coord lines
     			raf.readLine(); 
     			for (int i = 0; i < dim; i++) {
     				fullLine = raf.readLine();
     				line = (fullLine).split("\\s+");
-    				//System.out.println(line[1]);
     				if (fullLine.charAt(0)==' '){
 	    				Point2D p = new Point2D.Double(Double.parseDouble(line[2]), Double.parseDouble(line[3]));
-	    				System.out.println(p.toString());
 	    				points.add(p);
-	    				//node = Integer.parseInt(line[1]);
     				} else {
     					Point p = new Point(Integer.parseInt(line[1]), Integer.parseInt(line[2]));
-	    				System.out.println(p.toString());
 	    				points.add(p);
     				}
     			}
